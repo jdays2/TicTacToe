@@ -5,7 +5,7 @@ import GameCell from "./components/GameCell";
 import { RootState } from "./redux/store";
 
 const App: React.FC = () => {
-  const { gameBoard, roundCount } = useSelector(
+  const { gameBoard, roundCount, playerXCount, playerOCount } = useSelector(
     (state: RootState) => state.data
   );
   const [user, setUser] = useState(false);
@@ -21,8 +21,8 @@ const App: React.FC = () => {
             <span>X</span>
             <span>O</span>
           </div>
-          <button>TURN</button>
-          <button>/</button>
+          <div>TURN {user ? "O" : "X"}</div>
+          <button>...</button>
         </div>
         <div className="game">
           <>
@@ -66,8 +66,8 @@ const App: React.FC = () => {
         </div>
         <div className="scoreboard">
           <div>
-            <span>X (YOU)</span>
-            <span>0</span>
+            <span> (YOU)</span>
+            <span>{playerXCount}</span>
           </div>
 
           <div>
@@ -75,8 +75,8 @@ const App: React.FC = () => {
             <span>{roundCount}</span>
           </div>
           <div>
-            <span>O (CPU)</span>
-            <span>0</span>
+            <span> (CPU)</span>
+            <span>{playerOCount}</span>
           </div>
         </div>
       </div>
