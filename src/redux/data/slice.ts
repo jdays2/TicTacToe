@@ -78,12 +78,14 @@ const dataSlice = createSlice({
           state.playerOCount++;
           results = "1";
           state.endRound = true;
+          console.log("((hor1 || hor2) === 1)");
         } else if ((hor1 || hor2) === 8) {
           state.winner = 2;
           state.roundCount++;
           results = "2";
           state.playerXCount++;
           state.endRound = true;
+          console.log("((hor1 || hor2) === 8)");
         }
       }
       if ((vert1 || vert2) === 1) {
@@ -92,14 +94,15 @@ const dataSlice = createSlice({
         state.playerOCount++;
         state.endRound = true;
         results = "1";
+        console.log("((vert1 || vert2) === 1)");
       } else if ((vert1 || vert2) === 8) {
         state.winner = 2;
         state.roundCount++;
         state.playerXCount++;
         state.endRound = true;
         results = "2";
+        console.log("((vert1 || vert2) === 8)");
       }
-      console.log(results);
     },
     reset(state) {
       for (let i = 0; i < 3; i++) {

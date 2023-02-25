@@ -7,8 +7,14 @@ import { RootState, useAppDispatch } from "./redux/store";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { gameBoard, roundCount, playerXCount, playerOCount, endRound } =
-    useSelector((state: RootState) => state.data);
+  const {
+    gameBoard,
+    roundCount,
+    playerXCount,
+    playerOCount,
+    endRound,
+    winner,
+  } = useSelector((state: RootState) => state.data);
   const [user, setUser] = useState(false);
   function player() {
     user === false ? setUser(true) : setUser(false);
@@ -84,6 +90,34 @@ const App: React.FC = () => {
           <div>
             <span> (CPU)</span>
             <span>{playerOCount}</span>
+          </div>
+        </div>
+        <div
+          className={
+            winner === 2 ? "winner-container" : `winner-container hide`
+          }
+        >
+          <div className="winner">
+            <p>OH NO, YOU LOST…</p>
+            <h1>TAKES THE ROUND</h1>
+            <div>
+              <button>QUIT</button>
+              <button>NEXT ROUND</button>
+            </div>
+          </div>
+        </div>
+        <div
+          className={
+            winner === 1 ? "winner-container" : `winner-container hide`
+          }
+        >
+          <div className="winner">
+            <p>YOU WON!</p>
+            <h1>TAKES THE ROUND</h1>
+            <div>
+              <button>QUIT</button>
+              <button>NEXT ROUND</button>
+            </div>
           </div>
         </div>
       </div>
