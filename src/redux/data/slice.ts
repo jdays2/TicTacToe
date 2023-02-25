@@ -61,6 +61,8 @@ const dataSlice = createSlice({
       let vert1 = 1;
       let vert2 = 1;
 
+      let results = "";
+
       for (let i = 0; i < 3; i++) {
         vert1 = vert1 * cell[i][i].value;
         vert2 = vert2 * cell[2 - i][i].value;
@@ -74,12 +76,14 @@ const dataSlice = createSlice({
           state.winner = 1;
           state.roundCount++;
           state.playerOCount++;
+          results = "1";
           state.endRound = true;
         } else if ((hor1 || hor2) === 8) {
           state.winner = 2;
           state.roundCount++;
-          state.endRound = true;
+          results = "2";
           state.playerXCount++;
+          state.endRound = true;
         }
       }
       if ((vert1 || vert2) === 1) {
@@ -87,22 +91,23 @@ const dataSlice = createSlice({
         state.roundCount++;
         state.playerOCount++;
         state.endRound = true;
+        results = "1";
       } else if ((vert1 || vert2) === 8) {
         state.winner = 2;
         state.roundCount++;
         state.playerXCount++;
         state.endRound = true;
+        results = "2";
       }
+      console.log(results);
     },
     reset(state) {
-      if (state.endRound) {
-        for (let i = 0; i < 3; i++) {
-          for (let j = 0; j < 3; j++) {
-            state.gameBoard[i][j].value = 0;
-            state.gameBoard[i][j].done = false;
-            state.endRound = false;
-            state.moveCount = 0;
-          }
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          state.gameBoard[i][j].value = 0;
+          state.gameBoard[i][j].done = false;
+          state.endRound = false;
+          state.moveCount = 0;
         }
       }
     },

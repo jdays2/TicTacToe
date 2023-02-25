@@ -1,17 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./App.css";
 import GameCell from "./components/GameCell";
-import { RootState } from "./redux/store";
+import { reset } from "./redux/data/slice";
+import { RootState, useAppDispatch } from "./redux/store";
 
 const App: React.FC = () => {
-  const { gameBoard, roundCount, playerXCount, playerOCount } = useSelector(
-    (state: RootState) => state.data
-  );
+  const dispatch = useAppDispatch();
+  const { gameBoard, roundCount, playerXCount, playerOCount, endRound } =
+    useSelector((state: RootState) => state.data);
   const [user, setUser] = useState(false);
   function player() {
     user === false ? setUser(true) : setUser(false);
   }
+
+  useEffect(() => {
+    if (endRound) {
+      dispatch(reset());
+    }
+  }, [endRound]);
 
   return (
     <div className="App">

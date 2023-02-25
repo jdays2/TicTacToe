@@ -34,7 +34,6 @@ const GameCell: React.FC<gameCellProps> = ({
       play && play();
       setPlayer(!player);
       dispatch(winCheck());
-      dispatch(reset());
     }
   };
 
