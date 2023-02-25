@@ -5,7 +5,9 @@ import GameCell from "./components/GameCell";
 import { RootState } from "./redux/store";
 
 const App: React.FC = () => {
-  const data = useSelector((state: RootState) => state.data.gameBoard);
+  const { gameBoard, roundCount } = useSelector(
+    (state: RootState) => state.data
+  );
   const [user, setUser] = useState(false);
   function player() {
     user === false ? setUser(true) : setUser(false);
@@ -24,18 +26,7 @@ const App: React.FC = () => {
         </div>
         <div className="game">
           <>
-            {/* {data.map((e, i) => (
-              <GameCell
-                key={i}
-                id={i}
-                user={user}
-                value={e.value}
-                play={() => {
-                  player();
-                }}
-              />
-            ))} */}
-            {data[0].map((e, i) => (
+            {gameBoard[0].map((e, i) => (
               <GameCell
                 rowId={0}
                 key={i}
@@ -47,7 +38,7 @@ const App: React.FC = () => {
                 }}
               />
             ))}
-            {data[1].map((e, i) => (
+            {gameBoard[1].map((e, i) => (
               <GameCell
                 rowId={1}
                 key={i}
@@ -59,7 +50,7 @@ const App: React.FC = () => {
                 }}
               />
             ))}
-            {data[2].map((e, i) => (
+            {gameBoard[2].map((e, i) => (
               <GameCell
                 rowId={2}
                 key={i}
@@ -81,7 +72,7 @@ const App: React.FC = () => {
 
           <div>
             <span>TIES</span>
-            <span>0</span>
+            <span>{roundCount}</span>
           </div>
           <div>
             <span>O (CPU)</span>
