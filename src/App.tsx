@@ -90,7 +90,7 @@ const App: React.FC = () => {
         </div>
         <div className="scoreboard">
           <div>
-            <span> (YOU)</span>
+            <span>X (YOU)</span>
             <span>{playerXCount}</span>
           </div>
 
@@ -99,7 +99,7 @@ const App: React.FC = () => {
             <span>{roundCount}</span>
           </div>
           <div>
-            <span> (CPU)</span>
+            <span>O (CPU)</span>
             <span>{playerOCount}</span>
           </div>
         </div>
