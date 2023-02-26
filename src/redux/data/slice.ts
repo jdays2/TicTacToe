@@ -117,8 +117,11 @@ const dataSlice = createSlice({
         }
       }
     },
+    endGame(state) {
+      state.endRound = true;
+    },
   },
 });
 
-export const { changeValue, winCheck, reset } = dataSlice.actions;
+export const { changeValue, winCheck, reset, endGame } = dataSlice.actions;
 export default dataSlice.reducer;

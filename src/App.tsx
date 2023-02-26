@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./App.css";
 import GameCell from "./components/GameCell";
-import { reset } from "./redux/data/slice";
+import { reset, endGame } from "./redux/data/slice";
 import { RootState, useAppDispatch } from "./redux/store";
+import rest from "./assets/img/Redo.svg";
+import X from "./assets/img/Combined Shape Copy 2.svg";
+import O from "./assets/img/Oval.svg";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -20,22 +23,28 @@ const App: React.FC = () => {
     user === false ? setUser(true) : setUser(false);
   }
 
-  useEffect(() => {
+  const restart = () => {
     if (endRound) {
       dispatch(reset());
     }
-  }, [endRound]);
+  };
+  restart();
 
   return (
     <div className="App">
       <div className="container">
         <div className="display-wrapper">
           <div>
-            <span>X</span>
-            <span>O</span>
+            <img src={X} />
+            <img src={O} />
           </div>
-          <div>TURN {user ? "O" : "X"}</div>
-          <button>...</button>
+          <div>
+            <img src={user ? O : X} />
+            <span>TURN</span>
+          </div>
+          <button onClick={() => dispatch(endGame())}>
+            <img src={rest} />
+          </button>
         </div>
         <div className="game">
           <>
