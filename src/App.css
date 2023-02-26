@@ -51,6 +51,16 @@ body {
   border-radius: 15px;
 }
 
+.game__cell__O:hover {
+  background-image: url("./assets/img/Oval-hover.svg");
+  background-repeat: no-repeat;
+}
+
+.game__cell__X:hover {
+  background-image: url("./assets/img/plus-hover.svg");
+  background-repeat: no-repeat;
+}
+
 .scoreboard {
   display: flex;
   justify-content: space-between;

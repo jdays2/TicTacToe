@@ -43,7 +43,10 @@ const GameCell: React.FC<gameCellProps> = ({
       onClick={() => {
         click(id);
       }}
-      className="game__cell"
+      className={
+        `game__cell ` +
+        (value === 0 ? (user ? `game__cell__O` : "game__cell__X") : ``)
+      }
     >
       <img
         src={(value === 0 && "") || (value === 1 && O) || (value === 2 && X)}
