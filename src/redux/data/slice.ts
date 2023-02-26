@@ -72,30 +72,33 @@ const dataSlice = createSlice({
           hor1 = hor1 * cell[i][j].value;
           hor2 = hor2 * cell[j][i].value;
         }
-        if ((hor1 || hor2) === 1) {
+        if (hor1 === 1 || hor2 === 1) {
           state.winner = 1;
           state.roundCount++;
           state.playerOCount++;
           results = "1";
           state.endRound = true;
           console.log("((hor1 || hor2) === 1)");
-        } else if ((hor1 || hor2) === 8) {
+          break;
+        } else if (hor1 === 8 || hor2 === 8) {
+          console.log("Вошел в восьмерку");
           state.winner = 2;
           state.roundCount++;
           results = "2";
           state.playerXCount++;
           state.endRound = true;
           console.log("((hor1 || hor2) === 8)");
+          break;
         }
       }
-      if ((vert1 || vert2) === 1) {
+      if (vert1 === 1 || vert2 === 1) {
         state.winner = 1;
         state.roundCount++;
         state.playerOCount++;
         state.endRound = true;
         results = "1";
         console.log("((vert1 || vert2) === 1)");
-      } else if ((vert1 || vert2) === 8) {
+      } else if (vert1 === 8 || vert2 === 8) {
         state.winner = 2;
         state.roundCount++;
         state.playerXCount++;
