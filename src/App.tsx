@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./App.css";
 import GameCell from "./components/GameCell";
-import { reset, endGame } from "./redux/data/slice";
+import { reset, endGame, closeActiveStatus } from "./redux/data/slice";
 import { RootState, useAppDispatch } from "./redux/store";
 import rest from "./assets/img/Redo.svg";
 import X from "./assets/img/Combined Shape Copy 2.svg";
@@ -17,6 +17,7 @@ const App: React.FC = () => {
     playerOCount,
     endRound,
     winner,
+    statusActive,
   } = useSelector((state: RootState) => state.data);
   const [user, setUser] = useState(false);
   function player() {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
   const restart = () => {
     if (endRound) {
       dispatch(reset());
+      setUser(false);
     }
   };
   restart();
@@ -101,34 +103,42 @@ const App: React.FC = () => {
             <span>{playerOCount}</span>
           </div>
         </div>
-        <div
-          className={
-            winner === 2 ? "winner-container" : `winner-container hide`
-          }
-        >
-          <div className="winner">
-            <p>OH NO, YOU LOST…</p>
-            <h1>TAKES THE ROUND</h1>
-            <div>
-              <button>QUIT</button>
-              <button>NEXT ROUND</button>
+        {winner === 1 && (
+          <div
+            className={
+              statusActive ? "winner-container" : `winner-container hide`
+            }
+          >
+            <div className="winner">
+              <p>OH NO, O Win…</p>
+              <h1>TAKES THE ROUND</h1>
+              <div>
+                <button>QUIT</button>
+                <button onClick={() => dispatch(closeActiveStatus())}>
+                  NEXT ROUND
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          className={
-            winner === 1 ? "winner-container" : `winner-container hide`
-          }
-        >
-          <div className="winner">
-            <p>YOU WON!</p>
-            <h1>TAKES THE ROUND</h1>
-            <div>
-              <button>QUIT</button>
-              <button>NEXT ROUND</button>
+        )}
+        {winner === 2 && (
+          <div
+            className={
+              statusActive ? "winner-container" : `winner-container hide`
+            }
+          >
+            <div className="winner">
+              <p>X WON!</p>
+              <h1>TAKES THE ROUND</h1>
+              <div>
+                <button>QUIT</button>
+                <button onClick={() => dispatch(closeActiveStatus())}>
+                  NEXT ROUND
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

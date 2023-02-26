@@ -27,9 +27,10 @@ const GameCell: React.FC<gameCellProps> = ({
   const done = useSelector(
     (state: RootState) => state.data.gameBoard[rowId][id].done
   );
+  const { statusActive } = useSelector((state: RootState) => state.data);
 
   const click = (id: number) => {
-    if (done === false) {
+    if (done === false && !statusActive) {
       dispatch(changeValue({ rowId, id, user }));
       play && play();
       setPlayer(!player);
