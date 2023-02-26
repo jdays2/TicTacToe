@@ -13,6 +13,7 @@ type dataItem = {
   moveCount: number;
   playerOCount: number;
   playerXCount: number;
+  statusActive: boolean;
 };
 
 const initialState: dataItem = {
@@ -39,6 +40,7 @@ const initialState: dataItem = {
   moveCount: 0,
   playerXCount: 0,
   playerOCount: 0,
+  statusActive: false,
 };
 
 const dataSlice = createSlice({
@@ -61,8 +63,6 @@ const dataSlice = createSlice({
       let vert1 = 1;
       let vert2 = 1;
 
-      let results = "";
-
       for (let i = 0; i < 3; i++) {
         vert1 = vert1 * cell[i][i].value;
         vert2 = vert2 * cell[2 - i][i].value;
@@ -72,34 +72,40 @@ const dataSlice = createSlice({
           hor1 = hor1 * cell[i][j].value;
           hor2 = hor2 * cell[j][i].value;
         }
-        if ((hor1 || hor2) === 1) {
+        if (hor1 === 1 || hor2 === 1) {
           state.winner = 1;
           state.roundCount++;
           state.playerOCount++;
-          results = "1";
+          state.statusActive = true;
           state.endRound = true;
-        } else if ((hor1 || hor2) === 8) {
+          console.log("((hor1 || hor2) === 1)");
+          break;
+        } else if (hor1 === 8 || hor2 === 8) {
+          console.log("Вошел в восьмерку");
           state.winner = 2;
           state.roundCount++;
-          results = "2";
+          state.statusActive = true;
           state.playerXCount++;
           state.endRound = true;
+          console.log("((hor1 || hor2) === 8)");
+          break;
         }
       }
-      if ((vert1 || vert2) === 1) {
+      if (vert1 === 1 || vert2 === 1) {
         state.winner = 1;
         state.roundCount++;
         state.playerOCount++;
         state.endRound = true;
-        results = "1";
-      } else if ((vert1 || vert2) === 8) {
+        state.statusActive = true;
+        console.log("((vert1 || vert2) === 1)");
+      } else if (vert1 === 8 || vert2 === 8) {
         state.winner = 2;
         state.roundCount++;
         state.playerXCount++;
         state.endRound = true;
-        results = "2";
+        state.statusActive = true;
+        console.log("((vert1 || vert2) === 8)");
       }
-      console.log(results);
     },
     reset(state) {
       for (let i = 0; i < 3; i++) {
@@ -111,8 +117,16 @@ const dataSlice = createSlice({
         }
       }
     },
+    closeActiveStatus(state) {
+      state.statusActive = false;
+    },
+    endGame(state) {
+      state.endRound = true;
+      state.winner = 0;
+    },
   },
 });
 
-export const { changeValue, winCheck, reset } = dataSlice.actions;
+export const { changeValue, winCheck, reset, endGame, closeActiveStatus } =
+  dataSlice.actions;
 export default dataSlice.reducer;

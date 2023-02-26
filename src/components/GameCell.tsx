@@ -27,9 +27,10 @@ const GameCell: React.FC<gameCellProps> = ({
   const done = useSelector(
     (state: RootState) => state.data.gameBoard[rowId][id].done
   );
+  const { statusActive } = useSelector((state: RootState) => state.data);
 
   const click = (id: number) => {
-    if (done === false) {
+    if (done === false && !statusActive) {
       dispatch(changeValue({ rowId, id, user }));
       play && play();
       setPlayer(!player);
@@ -42,7 +43,10 @@ const GameCell: React.FC<gameCellProps> = ({
       onClick={() => {
         click(id);
       }}
-      className="game__cell"
+      className={
+        `game__cell ` +
+        (value === 0 ? (user ? `game__cell__O` : "game__cell__X") : ``)
+      }
     >
       <img
         src={(value === 0 && "") || (value === 1 && O) || (value === 2 && X)}
