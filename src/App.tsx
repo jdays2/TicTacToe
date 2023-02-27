@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import "./App.css";
 import GameCell from "./components/GameCell";
@@ -7,6 +6,8 @@ import {
   startNewRound,
   tryRestart,
   closeActiveStatus,
+  botMove,
+  setActivePlayer,
 } from "./redux/data/slice";
 import { RootState, useAppDispatch } from "./redux/store";
 import rest from "./assets/img/Redo.svg";
@@ -14,6 +15,7 @@ import X from "./assets/img/Combined Shape Copy 2.svg";
 import xGray from "./assets/img/x-gray.svg";
 import O from "./assets/img/Oval.svg";
 import oGray from "./assets/img/0-gray.svg";
+import { useEffect } from "react";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,11 +27,8 @@ const App: React.FC = () => {
     winner,
     statusActive,
     willRestart,
+    activePlayer,
   } = useSelector((state: RootState) => state.data);
-  const [user, setUser] = useState(false);
-  function player() {
-    user === false ? setUser(true) : setUser(false);
-  }
 
   return (
     <div className="App">
@@ -41,7 +40,10 @@ const App: React.FC = () => {
           </div>
           <div className="display__status">
             <div className="display__status-content">
-              <img src={user ? oGray : xGray} className="display__status-img" />
+              <img
+                src={activePlayer ? oGray : xGray}
+                className="display__status-img"
+              />
               <div>TURN</div>
             </div>
           </div>
@@ -59,11 +61,8 @@ const App: React.FC = () => {
                 rowId={0}
                 key={i}
                 id={i}
-                user={user}
+                user={activePlayer}
                 value={e.value}
-                play={() => {
-                  player();
-                }}
               />
             ))}
             {gameBoard[1].map((e, i) => (
@@ -71,11 +70,8 @@ const App: React.FC = () => {
                 rowId={1}
                 key={i}
                 id={i}
-                user={user}
+                user={activePlayer}
                 value={e.value}
-                play={() => {
-                  player();
-                }}
               />
             ))}
             {gameBoard[2].map((e, i) => (
@@ -83,11 +79,8 @@ const App: React.FC = () => {
                 rowId={2}
                 key={i}
                 id={i}
-                user={user}
+                user={activePlayer}
                 value={e.value}
-                play={() => {
-                  player();
-                }}
               />
             ))}
           </>
@@ -229,13 +222,16 @@ const App: React.FC = () => {
                 <div className="winner-container__buttons winner-container__buttons__restart">
                   <button
                     className="button__winner-gray button__restart"
-                    onClick={() => dispatch(tryRestart())}
+                    onClick={() => dispatch(closeActiveStatus())}
                   >
                     NO, CANCEL
                   </button>
                   <button
                     className="button__winner-orange button__restart"
-                    onClick={() => dispatch(reset())}
+                    onClick={() => {
+                      dispatch(reset());
+                      dispatch(closeActiveStatus());
+                    }}
                   >
                     YES, RESTART
                   </button>
