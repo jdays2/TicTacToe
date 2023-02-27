@@ -2,7 +2,7 @@ import "../App.css";
 import O from "../assets/img/Oval.svg";
 import X from "../assets/img/Combined Shape Copy 2.svg";
 import { useState } from "react";
-import { changeValue, reset, winCheck } from "../redux/data/slice";
+import { changeValue, drawChek, winCheck } from "../redux/data/slice";
 import { RootState, useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux/es/exports";
 
@@ -24,8 +24,8 @@ const GameCell: React.FC<gameCellProps> = ({
   const [player, setPlayer] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
-  const done = useSelector(
-    (state: RootState) => state.data.gameBoard[rowId][id].done
+  const { done, win } = useSelector(
+    (state: RootState) => state.data.gameBoard[rowId][id]
   );
   const { statusActive } = useSelector((state: RootState) => state.data);
 
@@ -35,6 +35,7 @@ const GameCell: React.FC<gameCellProps> = ({
       play && play();
       setPlayer(!player);
       dispatch(winCheck());
+      dispatch(drawChek());
     }
   };
 
@@ -43,10 +44,9 @@ const GameCell: React.FC<gameCellProps> = ({
       onClick={() => {
         click(id);
       }}
-      className={
-        `game__cell ` +
-        (value === 0 ? (user ? `game__cell__O` : "game__cell__X") : ``)
-      }
+      className={`game__cell ${
+        value === 0 ? (user ? `game__cell__O` : `game__cell__X`) : ""
+      } ${win ? `game_cell__win` : ""} `}
     >
       <img
         src={(value === 0 && "") || (value === 1 && O) || (value === 2 && X)}
@@ -56,6 +56,3 @@ const GameCell: React.FC<gameCellProps> = ({
 };
 
 export default GameCell;
-function useAddDispatch() {
-  throw new Error("Function not implemented.");
-}
