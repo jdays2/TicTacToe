@@ -1,11 +1,22 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+
+  font-family: "Outfit";
+  font-style: normal;
+  color: rgba(26, 42, 51, 1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  background: #1a2a33;
 }
 
 .App {
@@ -14,24 +25,76 @@ body {
   justify-content: center;
   align-items: center;
   margin: auto;
-
-  position: relative;
 }
 
 .container {
   width: 460px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
 }
 
-.display-wrapper {
+.display__players {
+  width: 71px;
+  height: 31px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+
+  margin-right: 87px;
+}
+
+.display__players-img {
+  width: 31px;
+  height: 31px;
+}
+
+.display-wrapper {
+  width: 456px;
+  display: flex;
+  align-items: center;
   margin-bottom: 19px;
 }
 
+.display__status {
+  width: 140px;
+  height: 52px;
+  background: #1f3641;
+  box-shadow: inset 0px -4px 0px #10212a;
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+
+  margin-right: 108px;
+}
+
+.display__status-content {
+  width: 80px;
+  height: 20px;
+  margin-top: 13px;
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #a8bfc9;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.display__status-img {
+  width: 20px;
+  height: 20px;
+  color: #a8bfc9;
+  margin-right: 13px;
+}
+
 .game {
-  width: 100%;
+  width: 460px;
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -45,6 +108,9 @@ body {
 .game__cell {
   width: 140px;
   height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   background: #1f3641;
   box-shadow: inset 0px -8px 0px #10212a;
@@ -54,26 +120,169 @@ body {
 .game__cell__O:hover {
   background-image: url("./assets/img/Oval-hover.svg");
   background-repeat: no-repeat;
+  background-position: center;
 }
 
 .game__cell__X:hover {
   background-image: url("./assets/img/plus-hover.svg");
   background-repeat: no-repeat;
+  background-position: center;
 }
 
 .scoreboard {
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.winner-container {
+.display {
+  width: 140px;
+  height: 72px;
+  border-radius: 15px;
+
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.display-blue {
+  background: #31c3bd;
+}
+.display-grey {
+  background: #a8bfc9;
+}
+.display-orange {
+  background: #f2b137;
+}
+
+.display__value {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.button__restart {
+  width: 52px;
+  height: 52px;
+  border: 0;
+  cursor: pointer;
+
+  background: #a8bfc9;
+  box-shadow: inset 0px -4px 0px #6b8997;
+  border-radius: 10px;
+}
+.button__restart:hover {
+  background: #dbe8ed;
+  box-shadow: inset 0px -4px 0px #6b8997;
+  border-radius: 10px;
+}
+
+.button__restart-img {
+  width: 20px;
+  height: 20px;
+}
+
+.winner-container-background {
   position: absolute;
-  top: 50%;
-  left: 0;
   width: 100%;
+  height: 100%;
+
+  display: flex;
   justify-content: center;
   align-items: center;
+
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.winner-container-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: #1f3641;
 }
 .hide {
   display: none;
+}
+
+.winner-container {
+  width: 491px;
+  height: 176px;
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  margin: 45px;
+}
+
+.winner-container__status {
+  color: #a8bfc9;
+}
+
+.winner-container__subject {
+  height: 64px;
+  width: 491px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #f2b137;
+}
+
+.winner-container__subject-img {
+  width: 64px;
+  height: 64px;
+}
+
+.winner-container__subject-title {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  letter-spacing: 2.5px;
+}
+
+.winner-container__buttons {
+  width: 238px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button__winner-gray {
+  height: 52px;
+  width: 76px;
+
+  background: #a8bfc9;
+  box-shadow: inset 0px -4px 0px #6b8997;
+  border-radius: 10px;
+
+  border: 0;
+
+  font-family: "Outfit";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #1a2a33;
+}
+
+.button__winner-orange {
+  width: 146px;
+  height: 52px;
+
+  background: #f2b137;
+  box-shadow: inset 0px -4px 0px #cc8b13;
+  border-radius: 10px;
+
+  border: 0;
+
+  font-family: "Outfit";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #1a2a33;
 }
