@@ -15,7 +15,7 @@ type dataItem = {
   playerOCount: number;
   playerXCount: number;
   statusActive: boolean;
-  willRestart: boolean;
+  restart: boolean;
   botMove: boolean;
   activePlayer: boolean;
 };
@@ -45,7 +45,7 @@ const initialState: dataItem = {
   playerXCount: 0,
   playerOCount: 0,
   statusActive: false,
-  willRestart: false,
+  restart: false,
   botMove: false,
   activePlayer: false,
 };
@@ -128,11 +128,14 @@ const dataSlice = createSlice({
           state.roundCount = 0;
           state.statusActive = false;
           state.winner = 0;
-          state.willRestart = false;
+          state.restart = false;
         }
       }
     },
-    closeActiveStatus(state) {
+    onActiveStatus(state) {
+      state.statusActive = true;
+    },
+    offActiveStatus(state) {
       state.statusActive = false;
     },
     startNewRound(state) {
@@ -147,9 +150,8 @@ const dataSlice = createSlice({
         state.winner = 0;
       }
     },
-    tryRestart(state) {
-      state.willRestart = !state.willRestart;
-      state.statusActive = !state.statusActive;
+    willRestart(state) {
+      state.restart = true;
     },
     botMove(state) {
       if (!state.activePlayer)
@@ -186,11 +188,12 @@ export const {
   changeValue,
   winCheck,
   reset,
-  closeActiveStatus,
+  onActiveStatus,
+  offActiveStatus,
   startNewRound,
   drawChek,
-  tryRestart,
   botMove,
   setActivePlayer,
+  willRestart,
 } = dataSlice.actions;
 export default dataSlice.reducer;
