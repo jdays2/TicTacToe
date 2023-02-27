@@ -2,7 +2,13 @@ import "../App.css";
 import O from "../assets/img/Oval.svg";
 import X from "../assets/img/Combined Shape Copy 2.svg";
 import { useState } from "react";
-import { changeValue, drawChek, winCheck } from "../redux/data/slice";
+import {
+  botMove,
+  changeValue,
+  drawChek,
+  setActivePlayer,
+  winCheck,
+} from "../redux/data/slice";
 import { RootState, useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux/es/exports";
 
@@ -33,7 +39,8 @@ const GameCell: React.FC<gameCellProps> = ({
     if (done === false && !statusActive) {
       dispatch(changeValue({ rowId, id, user }));
       play && play();
-      setPlayer(!player);
+      dispatch(setActivePlayer());
+      dispatch(botMove());
       dispatch(winCheck());
       dispatch(drawChek());
     }

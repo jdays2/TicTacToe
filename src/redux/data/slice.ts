@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type gameItems = {
-  id: number;
   value: number;
   done: boolean;
   win: boolean;
@@ -16,25 +15,27 @@ type dataItem = {
   playerOCount: number;
   playerXCount: number;
   statusActive: boolean;
-  willRestart: boolean;
+  restart: boolean;
+  botMove: boolean;
+  activePlayer: boolean;
 };
 
 const initialState: dataItem = {
   gameBoard: [
     [
-      { id: 0, value: 0, done: false, win: false },
-      { id: 1, value: 0, done: false, win: false },
-      { id: 2, value: 0, done: false, win: false },
+      { value: 0, done: false, win: false },
+      { value: 0, done: false, win: false },
+      { value: 0, done: false, win: false },
     ],
     [
-      { id: 3, value: 0, done: false, win: false },
-      { id: 4, value: 0, done: false, win: false },
-      { id: 5, value: 0, done: false, win: false },
+      { value: 0, done: false, win: false },
+      { value: 0, done: false, win: false },
+      { value: 0, done: false, win: false },
     ],
     [
-      { id: 6, value: 0, done: false, win: false },
-      { id: 7, value: 0, done: false, win: false },
-      { id: 8, value: 0, done: false, win: false },
+      { value: 0, done: false, win: false },
+      { value: 0, done: false, win: false },
+      { value: 0, done: false, win: false },
     ],
   ],
   winner: 0,
@@ -44,7 +45,9 @@ const initialState: dataItem = {
   playerXCount: 0,
   playerOCount: 0,
   statusActive: false,
-  willRestart: false,
+  restart: false,
+  botMove: false,
+  activePlayer: false,
 };
 
 const dataSlice = createSlice({
@@ -61,36 +64,29 @@ const dataSlice = createSlice({
     },
     winCheck(state) {
       let cell = state.gameBoard;
-      let vert1 = 0;
-      let vert2 = 0;
+      let vert1 = 1;
+      let vert2 = 1;
       for (let i = 0; i < 3; i++) {
-        vert2 = vert2 + cell[2 - i][i].value;
-        vert1 = vert1 + cell[i][i].value;
-        console.log(vert1);
+        vert2 = vert2 * cell[2 - i][i].value;
+        vert1 = vert1 * cell[i][i].value;
         let hor1 = 1;
         let hor2 = 1;
-
         for (let j = 0; j < 3; j++) {
-          hor1 = hor1 + cell[i][j].value;
-          hor2 = hor2 + cell[j][i].value;
-          if (hor1 === 0111) {
-            cell[i][j].win = true;
-          } else if (hor2 === 0111) {
-            cell[j][i].win = true;
-          }
+          hor1 = hor1 * cell[i][j].value;
+          hor2 = hor2 * cell[j][i].value;
         }
-        if (hor1 === 0111 || hor2 === 0111) {
+        if (hor1 === 1 || hor2 === 1) {
           state.winner = 1;
           state.roundCount++;
-          state.playerOCount++;
+          // state.playerOCount++;
           state.statusActive = true;
           state.endRound = true;
           break;
-        } else if (hor1 === 222 || hor2 === 222) {
+        } else if (hor1 === 8 || hor2 === 8) {
           state.winner = 2;
           state.roundCount++;
           state.statusActive = true;
-          state.playerXCount++;
+          // state.playerXCount++;
           state.endRound = true;
           break;
         }
@@ -98,15 +94,18 @@ const dataSlice = createSlice({
       if (vert1 === 1 || vert2 === 1) {
         state.winner = 1;
         state.roundCount++;
-        state.playerOCount++;
+        // state.playerOCount++;
         state.endRound = true;
         state.statusActive = true;
+        return;
       } else if (vert1 === 8 || vert2 === 8) {
         state.winner = 2;
         state.roundCount++;
-        state.playerXCount++;
+        // state.playerXCount++;
         state.endRound = true;
         state.statusActive = true;
+
+        return;
       }
     },
     drawChek(state) {
@@ -115,7 +114,6 @@ const dataSlice = createSlice({
         state.endRound = true;
         state.statusActive = true;
         state.roundCount++;
-        console.log("ничья");
       }
     },
     reset(state) {
@@ -130,11 +128,14 @@ const dataSlice = createSlice({
           state.roundCount = 0;
           state.statusActive = false;
           state.winner = 0;
-          state.willRestart = false;
+          state.restart = false;
         }
       }
     },
-    closeActiveStatus(state) {
+    onActiveStatus(state) {
+      state.statusActive = true;
+    },
+    offActiveStatus(state) {
       state.statusActive = false;
     },
     startNewRound(state) {
@@ -149,9 +150,36 @@ const dataSlice = createSlice({
         state.winner = 0;
       }
     },
-    tryRestart(state) {
-      state.willRestart = !state.willRestart;
-      state.statusActive = !state.statusActive;
+    willRestart(state) {
+      state.restart = true;
+    },
+    botMove(state) {
+      if (!state.activePlayer)
+        for (let i = 0; i < 3; i++) {
+          let item =
+            state.gameBoard[i][
+              Math.floor(Math.random() * state.gameBoard[i].length)
+            ];
+          let item2 =
+            state.gameBoard[
+              Math.floor(Math.random() * state.gameBoard[i].length)
+            ][i];
+          if (item.value === 0) {
+            item.value = 1;
+            item.done = true;
+            break;
+          } else if (item2.value === 0) {
+            item2.value = 1;
+            item2.done = true;
+            break;
+          }
+        }
+      state.activePlayer = false;
+    },
+    setActivePlayer(state) {
+      state.activePlayer = state.activePlayer
+        ? !state.activePlayer
+        : state.activePlayer;
     },
   },
 });
@@ -160,9 +188,12 @@ export const {
   changeValue,
   winCheck,
   reset,
-  closeActiveStatus,
+  onActiveStatus,
+  offActiveStatus,
   startNewRound,
   drawChek,
-  tryRestart,
+  botMove,
+  setActivePlayer,
+  willRestart,
 } = dataSlice.actions;
 export default dataSlice.reducer;

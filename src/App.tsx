@@ -1,12 +1,12 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import "./App.css";
 import GameCell from "./components/GameCell";
 import {
   reset,
   startNewRound,
-  tryRestart,
-  closeActiveStatus,
+  onActiveStatus,
+  willRestart,
+  offActiveStatus,
 } from "./redux/data/slice";
 import { RootState, useAppDispatch } from "./redux/store";
 import rest from "./assets/img/Redo.svg";
@@ -24,12 +24,9 @@ const App: React.FC = () => {
     playerOCount,
     winner,
     statusActive,
-    willRestart,
+    restart,
+    activePlayer,
   } = useSelector((state: RootState) => state.data);
-  const [user, setUser] = useState(false);
-  function player() {
-    user === false ? setUser(true) : setUser(false);
-  }
 
   return (
     <div className="App">
@@ -41,12 +38,18 @@ const App: React.FC = () => {
           </div>
           <div className="display__status">
             <div className="display__status-content">
-              <img src={user ? oGray : xGray} className="display__status-img" />
+              <img
+                src={activePlayer ? oGray : xGray}
+                className="display__status-img"
+              />
               <div>TURN</div>
             </div>
           </div>
           <button
-            onClick={() => dispatch(tryRestart())}
+            onClick={() => {
+              dispatch(onActiveStatus());
+              dispatch(willRestart());
+            }}
             className="display__button_restart"
           >
             <img src={rest} className="button__restart-img" />
@@ -59,11 +62,8 @@ const App: React.FC = () => {
                 rowId={0}
                 key={i}
                 id={i}
-                user={user}
+                user={activePlayer}
                 value={e.value}
-                play={() => {
-                  player();
-                }}
               />
             ))}
             {gameBoard[1].map((e, i) => (
@@ -71,11 +71,8 @@ const App: React.FC = () => {
                 rowId={1}
                 key={i}
                 id={i}
-                user={user}
+                user={activePlayer}
                 value={e.value}
-                play={() => {
-                  player();
-                }}
               />
             ))}
             {gameBoard[2].map((e, i) => (
@@ -83,11 +80,8 @@ const App: React.FC = () => {
                 rowId={2}
                 key={i}
                 id={i}
-                user={user}
+                user={activePlayer}
                 value={e.value}
-                play={() => {
-                  player();
-                }}
               />
             ))}
           </>
@@ -202,7 +196,6 @@ const App: React.FC = () => {
                     className="button__winner-orange"
                     onClick={() => {
                       dispatch(reset());
-                      dispatch(closeActiveStatus());
                     }}
                   >
                     NEXT ROUND
@@ -212,7 +205,7 @@ const App: React.FC = () => {
             </div>
           </div>
         )}
-        {willRestart ? (
+        {restart ? (
           <div
             className={
               statusActive
@@ -229,13 +222,18 @@ const App: React.FC = () => {
                 <div className="winner-container__buttons winner-container__buttons__restart">
                   <button
                     className="button__winner-gray button__restart"
-                    onClick={() => dispatch(tryRestart())}
+                    onClick={() => {
+                      dispatch(offActiveStatus());
+                    }}
                   >
                     NO, CANCEL
                   </button>
                   <button
                     className="button__winner-orange button__restart"
-                    onClick={() => dispatch(reset())}
+                    onClick={() => {
+                      dispatch(reset());
+                      dispatch(offActiveStatus());
+                    }}
                   >
                     YES, RESTART
                   </button>
