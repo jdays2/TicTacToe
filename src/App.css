@@ -247,6 +247,10 @@ body {
   letter-spacing: 2.5px;
 }
 
+.winner-container__subject-title-blue {
+  color: #31c3bd;
+}
+
 .winner-container__buttons {
   width: 238px;
   display: flex;

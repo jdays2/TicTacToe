@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./App.css";
 import GameCell from "./components/GameCell";
-import { reset, endGame, closeActiveStatus } from "./redux/data/slice";
+import { reset, startNewRound, winCheck } from "./redux/data/slice";
 import { RootState, useAppDispatch } from "./redux/store";
 import rest from "./assets/img/Redo.svg";
 import X from "./assets/img/Combined Shape Copy 2.svg";
@@ -16,7 +16,6 @@ const App: React.FC = () => {
     roundCount,
     playerXCount,
     playerOCount,
-    endRound,
     winner,
     statusActive,
   } = useSelector((state: RootState) => state.data);
@@ -24,16 +23,6 @@ const App: React.FC = () => {
   function player() {
     user === false ? setUser(true) : setUser(false);
   }
-
-  useEffect(() => {
-    const restart = () => {
-      if (endRound) {
-        dispatch(reset());
-        setUser(false);
-      }
-    };
-    restart();
-  }, [endRound]);
 
   return (
     <div className="App">
@@ -49,10 +38,7 @@ const App: React.FC = () => {
               <div>TURN</div>
             </div>
           </div>
-          <button
-            onClick={() => dispatch(endGame())}
-            className="button__restart"
-          >
+          <button onClick={() => dispatch(reset())} className="button__restart">
             <img src={rest} className="button__restart-img" />
           </button>
         </div>
@@ -129,10 +115,15 @@ const App: React.FC = () => {
                   </h1>
                 </div>
                 <div className="winner-container__buttons">
-                  <button className="button__winner-gray ">QUIT</button>
+                  <button
+                    className="button__winner-gray"
+                    onClick={() => dispatch(reset())}
+                  >
+                    QUIT
+                  </button>
                   <button
                     className="button__winner-orange"
-                    onClick={() => dispatch(closeActiveStatus())}
+                    onClick={() => dispatch(startNewRound())}
                   >
                     NEXT ROUND
                   </button>
@@ -141,24 +132,74 @@ const App: React.FC = () => {
             </div>
           </div>
         )}
-        {/* {winner === 2 && (
+        {winner === 2 && (
           <div
             className={
-              statusActive ? "winner-container" : `winner-container hide`
+              statusActive
+                ? `winner-container-background`
+                : `winner-container-background hide`
             }
           >
-            <div className="winner">
-              <p>X WON!</p>
-              <h1>TAKES THE ROUND</h1>
-              <div>
-                <button>QUIT</button>
-                <button onClick={() => dispatch(closeActiveStatus())}>
-                  NEXT ROUND
-                </button>
+            <div className="winner-container-wrapper">
+              <div className="winner-container">
+                <p className="winner-container__status">YOU WON!</p>
+                <div className="winner-container__subject">
+                  <img src={X} className="winner-container__subject-img" />
+                  <h1 className="winner-container__subject-title winner-container__subject-title-blue">
+                    TAKES THE ROUND
+                  </h1>
+                </div>
+                <div className="winner-container__buttons">
+                  <button
+                    className="button__winner-gray"
+                    onClick={() => dispatch(reset())}
+                  >
+                    QUIT
+                  </button>
+                  <button
+                    className="button__winner-orange"
+                    onClick={() => dispatch(startNewRound())}
+                  >
+                    NEXT ROUND
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        )} */}
+        )}
+        {winner === 3 && (
+          <div
+            className={
+              statusActive
+                ? `winner-container-background`
+                : `winner-container-background hide`
+            }
+          >
+            <div className="winner-container-wrapper">
+              <div className="winner-container">
+                <p className="winner-container__status">НИЧЬЯ</p>
+                <div className="winner-container__subject">
+                  <img src={O} className="winner-container__subject-img" />
+                  <h1 className="winner-container__subject-title">НИЧЬЯ</h1>
+                </div>
+                <div className="winner-container__buttons">
+                  <button
+                    className="button__winner-gray"
+                    onClick={() => dispatch(reset())}
+                  >
+                    НИЧЬЯ
+                  </button>
+                  <button
+                    className="button__winner-orange"
+                    onClick={() => dispatch(startNewRound())}
+                  >
+                    НИЧЬЯ
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

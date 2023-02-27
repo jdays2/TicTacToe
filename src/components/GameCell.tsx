@@ -2,7 +2,7 @@ import "../App.css";
 import O from "../assets/img/Oval.svg";
 import X from "../assets/img/Combined Shape Copy 2.svg";
 import { useState } from "react";
-import { changeValue, reset, winCheck } from "../redux/data/slice";
+import { changeValue, drawChek, winCheck } from "../redux/data/slice";
 import { RootState, useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux/es/exports";
 
@@ -35,6 +35,7 @@ const GameCell: React.FC<gameCellProps> = ({
       play && play();
       setPlayer(!player);
       dispatch(winCheck());
+      dispatch(winCheck());
     }
   };
 
@@ -56,6 +57,3 @@ const GameCell: React.FC<gameCellProps> = ({
 };
 
 export default GameCell;
-function useAddDispatch() {
-  throw new Error("Function not implemented.");
-}

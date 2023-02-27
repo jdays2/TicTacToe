@@ -107,6 +107,14 @@ const dataSlice = createSlice({
         console.log("((vert1 || vert2) === 8)");
       }
     },
+    drawChek(state) {
+      if (state.moveCount === 9 && state.winner === 0) {
+        state.winner = 3;
+        state.endRound = true;
+        state.statusActive = true;
+        console.log("ничья");
+      }
+    },
     reset(state) {
       for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
@@ -114,19 +122,38 @@ const dataSlice = createSlice({
           state.gameBoard[i][j].done = false;
           state.endRound = false;
           state.moveCount = 0;
+          state.playerOCount = 0;
+          state.playerXCount = 0;
+          state.roundCount = 0;
+          state.statusActive = false;
+          state.winner = 0;
         }
       }
     },
     closeActiveStatus(state) {
       state.statusActive = false;
     },
-    endGame(state) {
-      state.endRound = true;
-      state.winner = 0;
+    startNewRound(state) {
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          state.gameBoard[i][j].value = 0;
+          state.gameBoard[i][j].done = false;
+        }
+        state.endRound = false;
+        state.moveCount = 0;
+        state.statusActive = false;
+        state.winner = 0;
+      }
     },
   },
 });
 
-export const { changeValue, winCheck, reset, endGame, closeActiveStatus } =
-  dataSlice.actions;
+export const {
+  changeValue,
+  winCheck,
+  reset,
+  closeActiveStatus,
+  startNewRound,
+  drawChek,
+} = dataSlice.actions;
 export default dataSlice.reducer;
