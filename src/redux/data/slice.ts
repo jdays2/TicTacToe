@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type gameItems = {
+  id: number;
   value: number;
   done: boolean;
+  win: boolean;
 };
 
 type dataItem = {
@@ -20,19 +22,19 @@ type dataItem = {
 const initialState: dataItem = {
   gameBoard: [
     [
-      { value: 0, done: false },
-      { value: 0, done: false },
-      { value: 0, done: false },
+      { id: 0, value: 0, done: false, win: false },
+      { id: 1, value: 0, done: false, win: false },
+      { id: 2, value: 0, done: false, win: false },
     ],
     [
-      { value: 0, done: false },
-      { value: 0, done: false },
-      { value: 0, done: false },
+      { id: 3, value: 0, done: false, win: false },
+      { id: 4, value: 0, done: false, win: false },
+      { id: 5, value: 0, done: false, win: false },
     ],
     [
-      { value: 0, done: false },
-      { value: 0, done: false },
-      { value: 0, done: false },
+      { id: 6, value: 0, done: false, win: false },
+      { id: 7, value: 0, done: false, win: false },
+      { id: 8, value: 0, done: false, win: false },
     ],
   ],
   winner: 0,
@@ -59,34 +61,37 @@ const dataSlice = createSlice({
     },
     winCheck(state) {
       let cell = state.gameBoard;
-      let vert1 = 1;
-      let vert2 = 1;
-
+      let vert1 = 0;
+      let vert2 = 0;
       for (let i = 0; i < 3; i++) {
-        vert1 = vert1 * cell[i][i].value;
-        vert2 = vert2 * cell[2 - i][i].value;
+        vert2 = vert2 + cell[2 - i][i].value;
+        vert1 = vert1 + cell[i][i].value;
+        console.log(vert1);
         let hor1 = 1;
         let hor2 = 1;
+
         for (let j = 0; j < 3; j++) {
-          hor1 = hor1 * cell[i][j].value;
-          hor2 = hor2 * cell[j][i].value;
+          hor1 = hor1 + cell[i][j].value;
+          hor2 = hor2 + cell[j][i].value;
+          if (hor1 === 0111) {
+            cell[i][j].win = true;
+          } else if (hor2 === 0111) {
+            cell[j][i].win = true;
+          }
         }
-        if (hor1 === 1 || hor2 === 1) {
+        if (hor1 === 0111 || hor2 === 0111) {
           state.winner = 1;
           state.roundCount++;
           state.playerOCount++;
           state.statusActive = true;
           state.endRound = true;
-          console.log("((hor1 || hor2) === 1)");
           break;
-        } else if (hor1 === 8 || hor2 === 8) {
-          console.log("Вошел в восьмерку");
+        } else if (hor1 === 222 || hor2 === 222) {
           state.winner = 2;
           state.roundCount++;
           state.statusActive = true;
           state.playerXCount++;
           state.endRound = true;
-          console.log("((hor1 || hor2) === 8)");
           break;
         }
       }
@@ -96,14 +101,12 @@ const dataSlice = createSlice({
         state.playerOCount++;
         state.endRound = true;
         state.statusActive = true;
-        console.log("((vert1 || vert2) === 1)");
       } else if (vert1 === 8 || vert2 === 8) {
         state.winner = 2;
         state.roundCount++;
         state.playerXCount++;
         state.endRound = true;
         state.statusActive = true;
-        console.log("((vert1 || vert2) === 8)");
       }
     },
     drawChek(state) {
@@ -127,6 +130,7 @@ const dataSlice = createSlice({
           state.roundCount = 0;
           state.statusActive = false;
           state.winner = 0;
+          state.willRestart = false;
         }
       }
     },
@@ -147,6 +151,7 @@ const dataSlice = createSlice({
     },
     tryRestart(state) {
       state.willRestart = !state.willRestart;
+      state.statusActive = !state.statusActive;
     },
   },
 });

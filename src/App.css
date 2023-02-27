@@ -25,6 +25,10 @@ body {
   justify-content: center;
   align-items: center;
   margin: auto;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .container {
@@ -117,6 +121,10 @@ body {
   border-radius: 15px;
 }
 
+.game_cell__win {
+  background-color: #cc8b13;
+}
+
 .game__cell__O:hover {
   background-image: url("./assets/img/Oval-hover.svg");
   background-repeat: no-repeat;
@@ -162,7 +170,7 @@ body {
   line-height: 30px;
 }
 
-.button__restart {
+.display__button_restart {
   width: 52px;
   height: 52px;
   border: 0;
@@ -172,7 +180,7 @@ body {
   box-shadow: inset 0px -4px 0px #6b8997;
   border-radius: 10px;
 }
-.button__restart:hover {
+.display__button_restart:hover {
   background: #dbe8ed;
   box-shadow: inset 0px -4px 0px #6b8997;
   border-radius: 10px;
@@ -221,6 +229,12 @@ body {
   margin: 45px;
 }
 
+.winner-container-restart {
+  width: 351px;
+  height: 133px;
+  margin: 68px;
+}
+
 .winner-container-tied {
   width: 270px;
   height: 133px;
@@ -257,12 +271,22 @@ body {
   color: #a8bfc9;
 }
 
+.subject-title-restart {
+  color: #a8bfc9;
+}
+
 .winner-container__subject-title-blue {
   color: #31c3bd;
 }
 
 .winner-container__buttons {
   width: 238px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.winner-container__buttons__restart {
+  width: 306px;
   display: flex;
   justify-content: space-between;
 }
@@ -286,6 +310,10 @@ body {
 
 .button__winner-gray:hover {
   background: #dbe8ed;
+}
+
+.button__restart {
+  width: 139px;
 }
 
 .button__winner-orange {

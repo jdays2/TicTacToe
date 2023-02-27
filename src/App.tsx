@@ -1,13 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import "./App.css";
 import GameCell from "./components/GameCell";
-import { reset, startNewRound, tryRestart } from "./redux/data/slice";
+import {
+  reset,
+  startNewRound,
+  tryRestart,
+  closeActiveStatus,
+} from "./redux/data/slice";
 import { RootState, useAppDispatch } from "./redux/store";
 import rest from "./assets/img/Redo.svg";
 import X from "./assets/img/Combined Shape Copy 2.svg";
 import xGray from "./assets/img/x-gray.svg";
 import O from "./assets/img/Oval.svg";
+import oGray from "./assets/img/0-gray.svg";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -35,13 +41,13 @@ const App: React.FC = () => {
           </div>
           <div className="display__status">
             <div className="display__status-content">
-              <img src={user ? O : xGray} className="display__status-img" />
+              <img src={user ? oGray : xGray} className="display__status-img" />
               <div>TURN</div>
             </div>
           </div>
           <button
             onClick={() => dispatch(tryRestart())}
-            className="button__restart"
+            className="display__button_restart"
           >
             <img src={rest} className="button__restart-img" />
           </button>
@@ -194,7 +200,10 @@ const App: React.FC = () => {
                   </button>
                   <button
                     className="button__winner-orange"
-                    onClick={() => dispatch(startNewRound())}
+                    onClick={() => {
+                      dispatch(reset());
+                      dispatch(closeActiveStatus());
+                    }}
                   >
                     NEXT ROUND
                   </button>
@@ -212,23 +221,23 @@ const App: React.FC = () => {
             }
           >
             <div className="winner-container-wrapper">
-              <div className="winner-container winner-container-tied">
-                <h1 className="winner-container__subject-title subject-title-tied">
-                  ROUND TIED
+              <div className="winner-container winner-container-restart">
+                <h1 className="winner-container__subject-title subject-title-restart">
+                  RESTART GAME?
                 </h1>
 
-                <div className="winner-container__buttons">
+                <div className="winner-container__buttons winner-container__buttons__restart">
                   <button
-                    className="button__winner-gray"
-                    onClick={() => dispatch(reset())}
+                    className="button__winner-gray button__restart"
+                    onClick={() => dispatch(tryRestart())}
                   >
-                    QUIT
+                    NO, CANCEL
                   </button>
                   <button
-                    className="button__winner-orange"
-                    onClick={() => dispatch(startNewRound())}
+                    className="button__winner-orange button__restart"
+                    onClick={() => dispatch(reset())}
                   >
-                    NEXT ROUND
+                    YES, RESTART
                   </button>
                 </div>
               </div>
