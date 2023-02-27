@@ -14,6 +14,7 @@ type dataItem = {
   playerOCount: number;
   playerXCount: number;
   statusActive: boolean;
+  willRestart: boolean;
 };
 
 const initialState: dataItem = {
@@ -41,6 +42,7 @@ const initialState: dataItem = {
   playerXCount: 0,
   playerOCount: 0,
   statusActive: false,
+  willRestart: false,
 };
 
 const dataSlice = createSlice({
@@ -53,9 +55,6 @@ const dataSlice = createSlice({
         item.value = action.payload.user ? 1 : 2;
         item.done = true;
         state.moveCount++;
-      }
-      if (state.moveCount === 9) {
-        state.endRound = true;
       }
     },
     winCheck(state) {
@@ -112,6 +111,7 @@ const dataSlice = createSlice({
         state.winner = 3;
         state.endRound = true;
         state.statusActive = true;
+        state.roundCount++;
         console.log("ничья");
       }
     },
@@ -145,6 +145,9 @@ const dataSlice = createSlice({
         state.winner = 0;
       }
     },
+    tryRestart(state) {
+      state.willRestart = !state.willRestart;
+    },
   },
 });
 
@@ -155,5 +158,6 @@ export const {
   closeActiveStatus,
   startNewRound,
   drawChek,
+  tryRestart,
 } = dataSlice.actions;
 export default dataSlice.reducer;

@@ -221,6 +221,12 @@ body {
   margin: 45px;
 }
 
+.winner-container-tied {
+  width: 270px;
+  height: 133px;
+  margin: 67px;
+}
+
 .winner-container__status {
   color: #a8bfc9;
 }
@@ -245,6 +251,10 @@ body {
   font-size: 40px;
   line-height: 50px;
   letter-spacing: 2.5px;
+}
+
+.subject-title-tied {
+  color: #a8bfc9;
 }
 
 .winner-container__subject-title-blue {
@@ -274,6 +284,10 @@ body {
   color: #1a2a33;
 }
 
+.button__winner-gray:hover {
+  background: #dbe8ed;
+}
+
 .button__winner-orange {
   width: 146px;
   height: 52px;
@@ -289,4 +303,8 @@ body {
   font-size: 16px;
   line-height: 20px;
   color: #1a2a33;
+}
+
+.button__winner-orange:hover {
+  background: #ffc860;
 }
