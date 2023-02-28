@@ -27,7 +27,6 @@ const GameCell: React.FC<gameCellProps> = ({
   value,
   rowId,
 }) => {
-  const [player, setPlayer] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const { done, win } = useSelector(
@@ -38,7 +37,6 @@ const GameCell: React.FC<gameCellProps> = ({
   const click = (id: number) => {
     if (done === false && !statusActive) {
       dispatch(changeValue({ rowId, id, user }));
-      play && play();
       dispatch(setActivePlayer());
       dispatch(botMove());
       dispatch(winCheck());

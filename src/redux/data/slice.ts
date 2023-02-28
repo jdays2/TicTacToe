@@ -167,10 +167,12 @@ const dataSlice = createSlice({
           if (item.value === 0) {
             item.value = 1;
             item.done = true;
+            state.moveCount++;
             break;
           } else if (item2.value === 0) {
             item2.value = 1;
             item2.done = true;
+            state.moveCount++;
             break;
           }
         }

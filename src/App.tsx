@@ -7,6 +7,8 @@ import {
   onActiveStatus,
   willRestart,
   offActiveStatus,
+  winCheck,
+  drawChek,
 } from "./redux/data/slice";
 import { RootState, useAppDispatch } from "./redux/store";
 import rest from "./assets/img/Redo.svg";
@@ -14,6 +16,7 @@ import X from "./assets/img/Combined Shape Copy 2.svg";
 import xGray from "./assets/img/x-gray.svg";
 import O from "./assets/img/Oval.svg";
 import oGray from "./assets/img/0-gray.svg";
+import { useEffect } from "react";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +29,12 @@ const App: React.FC = () => {
     statusActive,
     restart,
     activePlayer,
+    moveCount,
   } = useSelector((state: RootState) => state.data);
+
+  useEffect(() => {
+    dispatch(drawChek());
+  }, [moveCount]);
 
   return (
     <div className="App">
