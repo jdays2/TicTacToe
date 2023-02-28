@@ -7,7 +7,6 @@ import {
   onActiveStatus,
   willRestart,
   offActiveStatus,
-  winCheck,
   drawChek,
 } from "./redux/data/slice";
 import { RootState, useAppDispatch } from "./redux/store";
@@ -203,7 +202,7 @@ const App: React.FC = () => {
                   <button
                     className="button__winner-orange"
                     onClick={() => {
-                      dispatch(reset());
+                      dispatch(startNewRound());
                     }}
                   >
                     NEXT ROUND

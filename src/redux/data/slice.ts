@@ -78,7 +78,7 @@ const dataSlice = createSlice({
         if (hor1 === 1 || hor2 === 1) {
           state.winner = 1;
           state.roundCount++;
-          // state.playerOCount++;
+          state.playerOCount++;
           state.statusActive = true;
           state.endRound = true;
           break;
@@ -86,7 +86,7 @@ const dataSlice = createSlice({
           state.winner = 2;
           state.roundCount++;
           state.statusActive = true;
-          // state.playerXCount++;
+          state.playerXCount++;
           state.endRound = true;
           break;
         }
@@ -94,14 +94,14 @@ const dataSlice = createSlice({
       if (vert1 === 1 || vert2 === 1) {
         state.winner = 1;
         state.roundCount++;
-        // state.playerOCount++;
+        state.playerOCount++;
         state.endRound = true;
         state.statusActive = true;
         return;
       } else if (vert1 === 8 || vert2 === 8) {
         state.winner = 2;
         state.roundCount++;
-        // state.playerXCount++;
+        state.playerXCount++;
         state.endRound = true;
         state.statusActive = true;
 
