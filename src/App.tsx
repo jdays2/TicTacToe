@@ -230,6 +230,7 @@ const App: React.FC = () => {
                   <button
                     className="button__winner-gray button__restart"
                     onClick={() => {
+                      dispatch(willRestart());
                       dispatch(offActiveStatus());
                     }}
                   >

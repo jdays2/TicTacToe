@@ -151,7 +151,7 @@ const dataSlice = createSlice({
       }
     },
     willRestart(state) {
-      state.restart = true;
+      state.restart = !state.restart;
     },
     botMove(state) {
       if (!state.activePlayer)
