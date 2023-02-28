@@ -1,15 +1,13 @@
-import "../App.css";
-import O from "../assets/img/Oval.svg";
-import X from "../assets/img/Combined Shape Copy 2.svg";
-import { useState } from "react";
+import O from "../../../assets/img/Oval.svg";
+import X from "../../../assets/img/Combined Shape Copy 2.svg";
 import {
   botMove,
   changeValue,
   drawChek,
   setActivePlayer,
   winCheck,
-} from "../redux/data/slice";
-import { RootState, useAppDispatch } from "../redux/store";
+} from "../../../redux/data/slice";
+import { RootState, useAppDispatch } from "../../../redux/store";
 import { useSelector } from "react-redux/es/exports";
 
 type gameCellProps = {
