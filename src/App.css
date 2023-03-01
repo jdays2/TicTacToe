@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  flex: 0 0 auto;
 }
 
 a {
@@ -73,6 +74,7 @@ body {
   border-radius: 10px;
 
   display: flex;
+  align-items: center;
   justify-content: center;
 
   margin-right: 108px;
@@ -81,7 +83,6 @@ body {
 .display__status-content {
   width: 80px;
   height: 20px;
-  margin-top: 13px;
 
   font-style: normal;
   font-weight: 700;
@@ -374,7 +375,7 @@ body {
 }
 
 .headstarter__body {
-  width: 460px;
+  width: 100%;
   height: 205px;
 
   background: #1f3641;
@@ -385,6 +386,8 @@ body {
   flex-direction: column;
   align-items: center;
   margin-bottom: 40px;
+  margin-right: 25px;
+  margin-left: 25px;
 }
 
 .body__title {
@@ -519,4 +522,71 @@ body {
 
 .buttons__vs-player:hover {
   background: #65e9e4;
+}
+
+@media (max-width: 1000px) {
+  .container {
+    max-width: 327px;
+  }
+  .body__selection-wrapper {
+    width: 279px;
+  }
+  .body__selection {
+    width: 262px;
+  }
+  .display-wrapper {
+    width: 328px;
+    margin-bottom: 64px;
+  }
+
+  .display__status {
+    width: 96px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-right: 74px;
+  }
+  .display__status-content {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.875px;
+  }
+  .display__status-img {
+    width: 16px;
+    height: 16px;
+  }
+  .display__button_restart {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .button__restart-img {
+    width: 15.38px;
+    height: 15.38px;
+  }
+  .display__players-img {
+    width: 32px;
+    height: 32px;
+  }
+  .display__players {
+    margin-right: 46px;
+    width: 71px;
+  }
+
+  .game {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .game__cell {
+    width: 96px;
+    height: 96px;
+  }
 }
