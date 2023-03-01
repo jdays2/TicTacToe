@@ -146,6 +146,7 @@ const dataSlice = createSlice({
           state.activePlayer = false;
           state.vsBotGame = false;
           state.botM = false;
+          state.playerOneX = false;
         }
       }
     },
