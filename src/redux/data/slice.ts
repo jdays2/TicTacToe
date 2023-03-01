@@ -23,6 +23,7 @@ type dataItem = {
   activePlayer: boolean;
   vsBotGame: boolean;
   botMove: boolean;
+  playerOneX: boolean;
 };
 
 const initialState: dataItem = {
@@ -51,9 +52,10 @@ const initialState: dataItem = {
   playerOCount: 0,
   statusActive: false,
   restart: false,
-  activePlayer: true,
+  activePlayer: false,
   vsBotGame: false,
   botMove: false,
+  playerOneX: true,
 };
 
 const dataSlice = createSlice({
@@ -142,6 +144,9 @@ const dataSlice = createSlice({
           state.statusActive = false;
           state.winner = 0;
           state.restart = false;
+          state.activePlayer = false;
+          state.vsBotGame = false;
+          state.botMove = false;
         }
       }
     },
@@ -167,7 +172,7 @@ const dataSlice = createSlice({
       state.restart = !state.restart;
     },
     botMove(state) {
-      if (state.vsBotGame)
+      if (state.vsBotGame && state.botMove)
         for (let i = 0; i < 3; i++) {
           let item =
             state.gameBoard[i][
@@ -178,19 +183,22 @@ const dataSlice = createSlice({
               Math.floor(Math.random() * state.gameBoard[i].length)
             ][i];
           if (item.value === 0) {
-            item.value = 1;
+            debugger;
+            item.value = state.playerOneX ? 1 : 2;
             item.done = true;
             state.moveCount++;
+            state.activePlayer = !state.activePlayer;
+            state.botMove = false;
             break;
           } else if (item2.value === 0) {
-            item2.value = 1;
+            item2.value = state.playerOneX ? 1 : 2;
             item2.done = true;
             state.moveCount++;
+            state.activePlayer = !state.activePlayer;
+            state.botMove = false;
             break;
           }
         }
-      state.activePlayer = !state.activePlayer;
-      state.botMove = false;
     },
     setActivePlayer(state, action: PayloadAction<boolean>) {
       if (action.payload !== undefined) {
@@ -206,6 +214,12 @@ const dataSlice = createSlice({
     },
     setBotActive(state, action: PayloadAction<boolean>) {
       state.vsBotGame = action.payload;
+      if (!state.playerOneX) {
+        state.botMove = true;
+      }
+    },
+    setFirstPlayer(state, action: PayloadAction<boolean>) {
+      state.playerOneX = action.payload;
     },
   },
 });
@@ -223,5 +237,6 @@ export const {
   willRestart,
   setBotActive,
   nextMove,
+  setFirstPlayer,
 } = dataSlice.actions;
 export default dataSlice.reducer;

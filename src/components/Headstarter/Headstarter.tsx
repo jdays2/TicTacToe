@@ -6,7 +6,11 @@ import oSelection from "../../assets/img/o-selection-hover.svg";
 import oSelectionGray from "../../assets/img/0-gray.svg";
 import { useState } from "react";
 import { useAppDispatch } from "../../redux/store";
-import { setActivePlayer, setBotActive } from "../../redux/data/slice";
+import {
+  setActivePlayer,
+  setBotActive,
+  setFirstPlayer,
+} from "../../redux/data/slice";
 import { Link } from "react-router-dom";
 
 const Headstarter: React.FC = () => {
@@ -18,11 +22,13 @@ const Headstarter: React.FC = () => {
     if (x) {
       setStateX(true);
       setStateO(false);
-      dispatch(setActivePlayer(true));
+      //   dispatch(setActivePlayer(false));
+      dispatch(setFirstPlayer(true));
     } else {
       setStateX(false);
       setStateO(true);
-      dispatch(setActivePlayer(false));
+      //   dispatch(setActivePlayer(true));
+      dispatch(setFirstPlayer(false));
     }
   };
 

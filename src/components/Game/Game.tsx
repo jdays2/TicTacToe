@@ -18,6 +18,7 @@ import xGray from "./../../assets/img/x-gray.svg";
 import O from "./../../assets/img/Oval.svg";
 import oGray from "./../../assets/img/0-gray.svg";
 import GameCell from "./GameCell/GameCell";
+import { Link } from "react-router-dom";
 
 const Game: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -32,11 +33,12 @@ const Game: React.FC = () => {
     activePlayer,
     moveCount,
     vsBotGame,
+    playerOneX,
   } = useSelector((state: RootState) => state.data);
 
   useEffect(() => {
-    dispatch(drawChek());
     dispatch(winCheck());
+    dispatch(drawChek());
   }, [moveCount]);
 
   useEffect(() => {
@@ -110,7 +112,11 @@ const Game: React.FC = () => {
       </div>
       <div className="scoreboard">
         <div className="display display-blue ">
-          <span>X (YOU)</span>
+          {vsBotGame ? (
+            <span>X ({playerOneX ? "YOU" : "CPU"})</span>
+          ) : (
+            <span>X ({playerOneX ? "P1" : "P2"})</span>
+          )}
           <span className="display__value">{playerXCount}</span>
         </div>
 
@@ -119,7 +125,12 @@ const Game: React.FC = () => {
           <span className="display__value">{roundCount}</span>
         </div>
         <div className="display display-orange">
-          <span>O (CPU)</span>
+          {vsBotGame ? (
+            <span>O ({!playerOneX ? "YOU" : "CPU"})</span>
+          ) : (
+            <span>O ({!playerOneX ? "P1" : "P2"})</span>
+          )}
+
           <span className="display__value">{playerOCount}</span>
         </div>
       </div>
@@ -251,15 +262,17 @@ const Game: React.FC = () => {
                 >
                   NO, CANCEL
                 </button>
-                <button
-                  className="button__winner-orange button__restart"
-                  onClick={() => {
-                    dispatch(reset());
-                    dispatch(offActiveStatus());
-                  }}
-                >
-                  YES, RESTART
-                </button>
+                <Link to="/">
+                  <button
+                    className="button__winner-orange button__restart"
+                    onClick={() => {
+                      dispatch(reset());
+                      dispatch(offActiveStatus());
+                    }}
+                  >
+                    YES, RESTART
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
