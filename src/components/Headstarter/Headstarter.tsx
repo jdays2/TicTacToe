@@ -81,25 +81,24 @@ const Headstarter: React.FC = () => {
         <p className="body__reminder">REMEMBER : X GOES FIRST</p>
       </div>
       <div className="headstarter__buttons">
-        <Link to="/game">
-          <button
-            className="buttons__vs-cpu"
-            onClick={() => {
-              modeSelection(true);
-            }}
-          >
-            NEW GAME (VS CPU)
-          </button>
+        <Link
+          to="/game"
+          className="buttons__vs-cpu"
+          onClick={() => {
+            modeSelection(true);
+          }}
+        >
+          NEW GAME (VS CPU)
         </Link>
-        <Link to="/game">
-          <button
-            className="buttons__vs-player"
-            onClick={() => {
-              modeSelection(false);
-            }}
-          >
-            NEW GAME (VS PLAYER)
-          </button>
+
+        <Link
+          to="/game"
+          className="buttons__vs-player"
+          onClick={() => {
+            modeSelection(false);
+          }}
+        >
+          NEW GAME (VS PLAYER)
         </Link>
       </div>
     </div>
