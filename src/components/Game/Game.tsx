@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
+  botMove,
   drawChek,
   offActiveStatus,
   onActiveStatus,
   reset,
   startNewRound,
   willRestart,
+  winCheck,
 } from "../../redux/data/slice";
 import { RootState, useAppDispatch } from "../../redux/store";
 
@@ -29,11 +31,25 @@ const Game: React.FC = () => {
     restart,
     activePlayer,
     moveCount,
+    vsBotGame,
   } = useSelector((state: RootState) => state.data);
 
   useEffect(() => {
     dispatch(drawChek());
+    dispatch(winCheck());
   }, [moveCount]);
+
+  useEffect(() => {
+    if (vsBotGame && botMove) {
+      dispatch(botMove());
+    }
+  }, [vsBotGame, botMove]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(reset());
+    };
+  }, []);
 
   return (
     <>

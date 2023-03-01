@@ -1,3 +1,4 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Game from "./components/Game/Game";
 import Headstarter from "./components/Headstarter/Headstarter";
@@ -9,8 +10,10 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <div className="container">
-        {/* <Game /> */}
-        <Headstarter />
+        <Routes>
+          <Route path="/game" element={<Game />} />
+          <Route path="/" element={<Headstarter />} />
+        </Routes>
       </div>
     </div>
   );

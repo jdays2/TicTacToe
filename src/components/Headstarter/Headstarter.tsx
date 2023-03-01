@@ -1,9 +1,39 @@
 import O from "../../assets/img/Oval.svg";
 import X from "../../assets/img/Combined Shape Copy 2.svg";
 import xSelection from "../../assets/img/x-selection-hover.svg";
+import xSelectionGray from "../../assets/img/x-gray.svg";
 import oSelection from "../../assets/img/o-selection-hover.svg";
+import oSelectionGray from "../../assets/img/0-gray.svg";
+import { useState } from "react";
+import { useAppDispatch } from "../../redux/store";
+import { setActivePlayer, setBotActive } from "../../redux/data/slice";
+import { Link } from "react-router-dom";
 
 const Headstarter: React.FC = () => {
+  const [stateX, setStateX] = useState(true);
+  const [stateO, setStateO] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const toggleSelections = (x: boolean) => {
+    if (x) {
+      setStateX(true);
+      setStateO(false);
+      dispatch(setActivePlayer(true));
+    } else {
+      setStateX(false);
+      setStateO(true);
+      dispatch(setActivePlayer(false));
+    }
+  };
+
+  const modeSelection = (x: boolean) => {
+    if (x) {
+      dispatch(setBotActive(true));
+    } else {
+      dispatch(setBotActive(false));
+    }
+  };
+
   return (
     <div className="headstarter">
       <div className="headstarter__icons">
@@ -14,19 +44,57 @@ const Headstarter: React.FC = () => {
         <p className="body__title">PICK PLAYER 1’S MARK</p>
         <div className="body__selection-wrapper">
           <div className="body__selection">
-            <div className="selection__item selection__item-active">
-              <img src={xSelection} />
+            <div
+              onClick={() => {
+                toggleSelections(true);
+              }}
+              className={`selection__item ${
+                stateX ? `selection__item-active` : ``
+              }`}
+            >
+              <img
+                src={stateX ? xSelection : xSelectionGray}
+                className="selection__item-img"
+              />
             </div>
-            <div className="selection__item">
-              <img src={oSelection} />
+            <div
+              onClick={() => {
+                toggleSelections(false);
+              }}
+              className={`selection__item ${
+                stateO ? `selection__item-active` : ``
+              }`}
+            >
+              <img
+                src={stateO ? oSelection : oSelectionGray}
+                className="selection__item-img"
+              />
             </div>
           </div>
         </div>
         <p className="body__reminder">REMEMBER : X GOES FIRST</p>
       </div>
       <div className="headstarter__buttons">
-        <button className="buttons__vs-cpu">NEW GAME (VS CPU)</button>
-        <button className="buttons__vs-player">NEW GAME (VS PLAYER)</button>
+        <Link to="/game">
+          <button
+            className="buttons__vs-cpu"
+            onClick={() => {
+              modeSelection(true);
+            }}
+          >
+            NEW GAME (VS CPU)
+          </button>
+        </Link>
+        <Link to="/game">
+          <button
+            className="buttons__vs-player"
+            onClick={() => {
+              modeSelection(false);
+            }}
+          >
+            NEW GAME (VS PLAYER)
+          </button>
+        </Link>
       </div>
     </div>
   );
