@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   botMove,
-  drawChek,
   offActiveStatus,
   onActiveStatus,
   reset,
@@ -38,14 +37,10 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     dispatch(winCheck());
-    dispatch(drawChek());
-  }, [moveCount]);
-
-  useEffect(() => {
     if (vsBotGame && botMove) {
       dispatch(botMove());
     }
-  }, [vsBotGame, botMove]);
+  }, [moveCount]);
 
   useEffect(() => {
     return () => {
@@ -63,7 +58,7 @@ const Game: React.FC = () => {
         <div className="display__status">
           <div className="display__status-content">
             <img
-              src={activePlayer ? oGray : xGray}
+              src={!activePlayer ? xGray : oGray}
               className="display__status-img"
             />
             <div>TURN</div>
