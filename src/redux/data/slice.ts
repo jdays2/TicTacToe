@@ -1,9 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type gameItems = {
   value: number;
   done: boolean;
   win: boolean;
+};
+
+type setActivePlayer = {
+  payload?: boolean | undefined;
 };
 
 type dataItem = {
@@ -16,8 +20,10 @@ type dataItem = {
   playerXCount: number;
   statusActive: boolean;
   restart: boolean;
-  botMove: boolean;
   activePlayer: boolean;
+  vsBotGame: boolean;
+  botMove: boolean;
+  playerOneX: boolean;
 };
 
 const initialState: dataItem = {
@@ -46,8 +52,10 @@ const initialState: dataItem = {
   playerOCount: 0,
   statusActive: false,
   restart: false,
-  botMove: false,
   activePlayer: false,
+  vsBotGame: false,
+  botMove: false,
+  playerOneX: true,
 };
 
 const dataSlice = createSlice({
@@ -60,6 +68,9 @@ const dataSlice = createSlice({
         item.value = action.payload.user ? 1 : 2;
         item.done = true;
         state.moveCount++;
+      }
+      if (state.vsBotGame) {
+        state.botMove = true;
       }
     },
     winCheck(state) {
@@ -79,6 +90,7 @@ const dataSlice = createSlice({
           state.winner = 1;
           state.roundCount++;
           state.playerOCount++;
+          console.log(1!);
           state.statusActive = true;
           state.endRound = true;
           break;
@@ -91,21 +103,24 @@ const dataSlice = createSlice({
           break;
         }
       }
-      if (vert1 === 1 || vert2 === 1) {
-        state.winner = 1;
-        state.roundCount++;
-        state.playerOCount++;
-        state.endRound = true;
-        state.statusActive = true;
-        return;
-      } else if (vert1 === 8 || vert2 === 8) {
-        state.winner = 2;
-        state.roundCount++;
-        state.playerXCount++;
-        state.endRound = true;
-        state.statusActive = true;
+      if (!state.winner) {
+        if (vert1 === 1 || vert2 === 1) {
+          console.log(2);
+          state.winner = 1;
+          state.roundCount++;
+          state.playerOCount++;
+          state.endRound = true;
+          state.statusActive = true;
+          return;
+        } else if (vert1 === 8 || vert2 === 8) {
+          state.winner = 2;
+          state.roundCount++;
+          state.playerXCount++;
+          state.endRound = true;
+          state.statusActive = true;
 
-        return;
+          return;
+        }
       }
     },
     drawChek(state) {
@@ -129,6 +144,9 @@ const dataSlice = createSlice({
           state.statusActive = false;
           state.winner = 0;
           state.restart = false;
+          state.activePlayer = false;
+          state.vsBotGame = false;
+          state.botMove = false;
         }
       }
     },
@@ -154,7 +172,7 @@ const dataSlice = createSlice({
       state.restart = !state.restart;
     },
     botMove(state) {
-      if (!state.activePlayer)
+      if (state.vsBotGame && state.botMove)
         for (let i = 0; i < 3; i++) {
           let item =
             state.gameBoard[i][
@@ -165,23 +183,43 @@ const dataSlice = createSlice({
               Math.floor(Math.random() * state.gameBoard[i].length)
             ][i];
           if (item.value === 0) {
-            item.value = 1;
+            debugger;
+            item.value = state.playerOneX ? 1 : 2;
             item.done = true;
             state.moveCount++;
+            state.activePlayer = !state.activePlayer;
+            state.botMove = false;
             break;
           } else if (item2.value === 0) {
-            item2.value = 1;
+            item2.value = state.playerOneX ? 1 : 2;
             item2.done = true;
             state.moveCount++;
+            state.activePlayer = !state.activePlayer;
+            state.botMove = false;
             break;
           }
         }
-      state.activePlayer = false;
     },
-    setActivePlayer(state) {
-      state.activePlayer = state.activePlayer
-        ? !state.activePlayer
-        : state.activePlayer;
+    setActivePlayer(state, action: PayloadAction<boolean>) {
+      if (action.payload !== undefined) {
+        if (action.payload) {
+          state.activePlayer = true;
+        } else {
+          state.activePlayer = false;
+        }
+      }
+    },
+    nextMove(state) {
+      state.activePlayer = !state.activePlayer;
+    },
+    setBotActive(state, action: PayloadAction<boolean>) {
+      state.vsBotGame = action.payload;
+      if (!state.playerOneX) {
+        state.botMove = true;
+      }
+    },
+    setFirstPlayer(state, action: PayloadAction<boolean>) {
+      state.playerOneX = action.payload;
     },
   },
 });
@@ -197,5 +235,8 @@ export const {
   botMove,
   setActivePlayer,
   willRestart,
+  setBotActive,
+  nextMove,
+  setFirstPlayer,
 } = dataSlice.actions;
 export default dataSlice.reducer;
