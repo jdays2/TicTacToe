@@ -140,10 +140,11 @@ const Game: React.FC = () => {
           <div className="winner-container-wrapper">
             <div className="winner-container">
               <p className="winner-container__status">
-                {vsBotGame && (playerOneX ? "OH NO, YOU LOST…" : "YOU WON!")}
-                {!vsBotGame && !playerOneX
-                  ? "PLAYER 1 WINS!"
-                  : "PLAYER 2 WINS!"}
+                {(vsBotGame &&
+                  (playerOneX ? "OH NO, YOU LOST…" : "YOU WON!")) ||
+                  (!vsBotGame && !playerOneX
+                    ? "PLAYER 1 WINS!"
+                    : "PLAYER 2 WINS!")}
               </p>
               <div className="winner-container__subject">
                 <img src={O} className="winner-container__subject-img" />
