@@ -52,15 +52,14 @@ const Game: React.FC = () => {
     <>
       <div className="display-wrapper">
         <div className="display__players">
-          <img src={X} className="display__players-img" alt="x" />
-          <img src={O} className="display__players-img" alt="o" />
+          <img src={X} className="display__players-img" />
+          <img src={O} className="display__players-img" />
         </div>
         <div className="display__status">
           <div className="display__status-content">
             <img
               src={!activePlayer ? xGray : oGray}
               className="display__status-img"
-              alt="x/o"
             />
             <div>TURN</div>
           </div>
@@ -72,7 +71,7 @@ const Game: React.FC = () => {
           }}
           className="display__button_restart"
         >
-          <img src={rest} className="button__restart-img" alt="restart-img" />
+          <img src={rest} className="button__restart-img" />
         </button>
       </div>
       <div className="game">
@@ -147,11 +146,7 @@ const Game: React.FC = () => {
                   : "PLAYER 2 WINS!"}
               </p>
               <div className="winner-container__subject">
-                <img
-                  src={O}
-                  className="winner-container__subject-img"
-                  alt="x"
-                />
+                <img src={O} className="winner-container__subject-img" />
                 <h1 className="winner-container__subject-title">
                   TAKES THE ROUND
                 </h1>
@@ -193,11 +188,7 @@ const Game: React.FC = () => {
                     : "PLAYER 1 WINS!")}
               </p>
               <div className="winner-container__subject">
-                <img
-                  src={X}
-                  className="winner-container__subject-img"
-                  alt="x"
-                />
+                <img src={X} className="winner-container__subject-img" />
                 <h1 className="winner-container__subject-title winner-container__subject-title-blue">
                   TAKES THE ROUND
                 </h1>

@@ -42,7 +42,6 @@ const GameCell: React.FC<gameCellProps> = ({ user, id, value, rowId }) => {
     >
       <img
         src={(value === 0 && "") || (value === 1 && O) || (value === 2 && X)}
-        alt="o/x"
       />
     </div>
   );
