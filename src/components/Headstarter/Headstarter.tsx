@@ -37,8 +37,8 @@ const Headstarter: React.FC = () => {
   return (
     <div className="headstarter">
       <div className="headstarter__icons">
-        <img className="icons__x" src={X} alt="x" />
-        <img className="icons__o" src={O} alt="o" />
+        <img className="icons__x" src={X} />
+        <img className="icons__o" src={O} />
       </div>
       <div className="headstarter__body">
         <p className="body__title">PICK PLAYER 1’S MARK</p>
@@ -55,7 +55,6 @@ const Headstarter: React.FC = () => {
               <img
                 src={stateX ? xSelection : xSelectionGray}
                 className="selection__item-img"
-                alt="x/x-gray"
               />
             </div>
             <div
@@ -69,7 +68,6 @@ const Headstarter: React.FC = () => {
               <img
                 src={stateO ? oSelection : oSelectionGray}
                 className="selection__item-img"
-                alt="o/o-gray"
               />
             </div>
           </div>
