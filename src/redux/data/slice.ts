@@ -90,7 +90,6 @@ const dataSlice = createSlice({
           state.winner = 1;
           state.roundCount++;
           state.playerOCount++;
-          console.log(1!);
           state.statusActive = true;
           state.endRound = true;
           break;
@@ -105,7 +104,6 @@ const dataSlice = createSlice({
       }
       if (!state.winner) {
         if (vert1 === 1 || vert2 === 1) {
-          console.log(2);
           state.winner = 1;
           state.roundCount++;
           state.playerOCount++;
