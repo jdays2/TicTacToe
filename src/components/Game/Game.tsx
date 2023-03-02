@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   botMove,
-  drawChek,
   offActiveStatus,
   onActiveStatus,
   reset,
@@ -38,14 +37,10 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     dispatch(winCheck());
-    dispatch(drawChek());
-  }, [moveCount]);
-
-  useEffect(() => {
     if (vsBotGame && botMove) {
       dispatch(botMove());
     }
-  }, [vsBotGame, botMove]);
+  }, [moveCount]);
 
   useEffect(() => {
     return () => {
@@ -63,7 +58,7 @@ const Game: React.FC = () => {
         <div className="display__status">
           <div className="display__status-content">
             <img
-              src={activePlayer ? oGray : xGray}
+              src={!activePlayer ? xGray : oGray}
               className="display__status-img"
             />
             <div>TURN</div>
@@ -144,7 +139,12 @@ const Game: React.FC = () => {
         >
           <div className="winner-container-wrapper">
             <div className="winner-container">
-              <p className="winner-container__status">OH NO, YOU LOST…</p>
+              <p className="winner-container__status">
+                {vsBotGame && (playerOneX ? "OH NO, YOU LOST…" : "YOU WON!")}
+                {!vsBotGame && !playerOneX
+                  ? "PLAYER 1 WINS!"
+                  : "PLAYER 2 WINS!"}
+              </p>
               <div className="winner-container__subject">
                 <img src={O} className="winner-container__subject-img" />
                 <h1 className="winner-container__subject-title">
@@ -152,12 +152,13 @@ const Game: React.FC = () => {
                 </h1>
               </div>
               <div className="winner-container__buttons">
-                <button
+                <Link
+                  to="/"
                   className="button__winner-gray"
                   onClick={() => dispatch(reset())}
                 >
                   QUIT
-                </button>
+                </Link>
                 <button
                   className="button__winner-orange"
                   onClick={() => dispatch(startNewRound())}
@@ -179,7 +180,13 @@ const Game: React.FC = () => {
         >
           <div className="winner-container-wrapper">
             <div className="winner-container">
-              <p className="winner-container__status">YOU WON!</p>
+              <p className="winner-container__status">
+                {(vsBotGame &&
+                  (playerOneX ? "YOU WON!" : "OH NO, YOU LOST…")) ||
+                  (!vsBotGame && !playerOneX
+                    ? "PLAYER 2 WINS!"
+                    : "PLAYER 1 WINS!")}
+              </p>
               <div className="winner-container__subject">
                 <img src={X} className="winner-container__subject-img" />
                 <h1 className="winner-container__subject-title winner-container__subject-title-blue">
@@ -187,12 +194,13 @@ const Game: React.FC = () => {
                 </h1>
               </div>
               <div className="winner-container__buttons">
-                <button
+                <Link
+                  to="/"
                   className="button__winner-gray"
                   onClick={() => dispatch(reset())}
                 >
                   QUIT
-                </button>
+                </Link>
                 <button
                   className="button__winner-orange"
                   onClick={() => dispatch(startNewRound())}
@@ -262,16 +270,15 @@ const Game: React.FC = () => {
                 >
                   NO, CANCEL
                 </button>
-                <Link to="/">
-                  <button
-                    className="button__winner-orange button__restart"
-                    onClick={() => {
-                      dispatch(reset());
-                      dispatch(offActiveStatus());
-                    }}
-                  >
-                    YES, RESTART
-                  </button>
+                <Link
+                  to="/"
+                  className="button__winner-orange button__restart"
+                  onClick={() => {
+                    dispatch(reset());
+                    dispatch(offActiveStatus());
+                  }}
+                >
+                  YES, RESTART
                 </Link>
               </div>
             </div>

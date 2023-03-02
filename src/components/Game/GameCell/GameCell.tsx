@@ -1,13 +1,6 @@
 import O from "../../../assets/img/Oval.svg";
 import X from "../../../assets/img/Combined Shape Copy 2.svg";
-import {
-  botMove,
-  changeValue,
-  drawChek,
-  nextMove,
-  setActivePlayer,
-  winCheck,
-} from "../../../redux/data/slice";
+import { botMove, changeValue, nextMove } from "../../../redux/data/slice";
 import { RootState, useAppDispatch } from "../../../redux/store";
 import { useSelector } from "react-redux/es/exports";
 

@@ -22,7 +22,7 @@ type dataItem = {
   restart: boolean;
   activePlayer: boolean;
   vsBotGame: boolean;
-  botMove: boolean;
+  botM: boolean;
   playerOneX: boolean;
 };
 
@@ -54,7 +54,7 @@ const initialState: dataItem = {
   restart: false,
   activePlayer: false,
   vsBotGame: false,
-  botMove: false,
+  botM: false,
   playerOneX: true,
 };
 
@@ -70,7 +70,7 @@ const dataSlice = createSlice({
         state.moveCount++;
       }
       if (state.vsBotGame) {
-        state.botMove = true;
+        state.botM = true;
       }
     },
     winCheck(state) {
@@ -122,13 +122,12 @@ const dataSlice = createSlice({
           return;
         }
       }
-    },
-    drawChek(state) {
       if (state.moveCount === 9 && state.winner === 0) {
         state.winner = 3;
         state.endRound = true;
         state.statusActive = true;
         state.roundCount++;
+        state.activePlayer = false;
       }
     },
     reset(state) {
@@ -146,7 +145,8 @@ const dataSlice = createSlice({
           state.restart = false;
           state.activePlayer = false;
           state.vsBotGame = false;
-          state.botMove = false;
+          state.botM = false;
+          state.playerOneX = false;
         }
       }
     },
@@ -162,17 +162,21 @@ const dataSlice = createSlice({
           state.gameBoard[i][j].value = 0;
           state.gameBoard[i][j].done = false;
         }
-        state.endRound = false;
-        state.moveCount = 0;
-        state.statusActive = false;
-        state.winner = 0;
+      }
+      state.endRound = false;
+      state.moveCount = 0;
+      state.statusActive = false;
+      state.winner = 0;
+      state.activePlayer = false;
+      if (state.vsBotGame && !state.playerOneX) {
+        state.botM = true;
       }
     },
     willRestart(state) {
       state.restart = !state.restart;
     },
     botMove(state) {
-      if (state.vsBotGame && state.botMove)
+      if (state.vsBotGame && state.botM)
         for (let i = 0; i < 3; i++) {
           let item =
             state.gameBoard[i][
@@ -182,20 +186,20 @@ const dataSlice = createSlice({
             state.gameBoard[
               Math.floor(Math.random() * state.gameBoard[i].length)
             ][i];
+
           if (item.value === 0) {
-            debugger;
             item.value = state.playerOneX ? 1 : 2;
             item.done = true;
             state.moveCount++;
             state.activePlayer = !state.activePlayer;
-            state.botMove = false;
+            state.botM = false;
             break;
           } else if (item2.value === 0) {
             item2.value = state.playerOneX ? 1 : 2;
             item2.done = true;
             state.moveCount++;
             state.activePlayer = !state.activePlayer;
-            state.botMove = false;
+            state.botM = false;
             break;
           }
         }
@@ -215,7 +219,7 @@ const dataSlice = createSlice({
     setBotActive(state, action: PayloadAction<boolean>) {
       state.vsBotGame = action.payload;
       if (!state.playerOneX) {
-        state.botMove = true;
+        state.botM = true;
       }
     },
     setFirstPlayer(state, action: PayloadAction<boolean>) {
@@ -231,7 +235,6 @@ export const {
   onActiveStatus,
   offActiveStatus,
   startNewRound,
-  drawChek,
   botMove,
   setActivePlayer,
   willRestart,

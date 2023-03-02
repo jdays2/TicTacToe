@@ -1,7 +1,13 @@
 * {
   margin: 0;
   padding: 0;
+  flex: 0 0 auto;
+  border: 0;
   box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-size: 1em;
+  zoom: 1;
 }
 
 a {
@@ -16,14 +22,15 @@ body {
   font-style: normal;
   color: rgba(26, 42, 51, 1);
 
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: auto;
   background: #1a2a33;
 }
 
 .App {
+  position: relative;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -73,15 +80,16 @@ body {
   border-radius: 10px;
 
   display: flex;
+  align-items: center;
   justify-content: center;
 
   margin-right: 108px;
+  padding-bottom: 5px;
 }
 
 .display__status-content {
   width: 80px;
   height: 20px;
-  margin-top: 13px;
 
   font-style: normal;
   font-weight: 700;
@@ -123,6 +131,11 @@ body {
   background: #1f3641;
   box-shadow: inset 0px -8px 0px #10212a;
   border-radius: 15px;
+}
+
+.game__cell img {
+  max-width: 64px;
+  max-height: 64px;
 }
 
 .game_cell__win {
@@ -312,6 +325,9 @@ body {
   color: #1a2a33;
 
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button__winner-gray:hover {
@@ -320,6 +336,7 @@ body {
 
 .button__restart {
   width: 139px;
+  padding: 0;
 }
 
 .button__winner-orange {
@@ -339,6 +356,9 @@ body {
   color: #1a2a33;
 
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button__winner-orange:hover {
@@ -367,7 +387,7 @@ body {
 }
 
 .headstarter__body {
-  width: 460px;
+  width: 100%;
   height: 205px;
 
   background: #1f3641;
@@ -378,6 +398,8 @@ body {
   flex-direction: column;
   align-items: center;
   margin-bottom: 40px;
+  margin-right: 25px;
+  margin-left: 25px;
 }
 
 .body__title {
@@ -421,23 +443,18 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  transition: 0.4s;
 }
 
 .selection__item:hover {
   background: rgba(168, 191, 201, 0.05);
-  transition: 0.4s;
 }
 
 .selection__item-active {
   background: #a8bfc9;
-  transition: 0.2s;
 }
 
 .selection__item-active:hover {
   background: #a8bfc9;
-  transition: 0.2s;
 }
 
 .selection__item-img {
@@ -517,4 +534,142 @@ body {
 
 .buttons__vs-player:hover {
   background: #65e9e4;
+}
+
+@media (max-width: 1000px) {
+  .App {
+    max-width: 768px;
+    max-height: 1024px;
+  }
+
+  .container {
+    max-width: 327px;
+  }
+  .body__selection-wrapper {
+    width: 279px;
+  }
+  .body__selection {
+    width: 262px;
+  }
+  .display-wrapper {
+    width: 328px;
+    margin-bottom: 64px;
+  }
+
+  .display__status {
+    width: 96px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-right: 74px;
+    padding: 15px;
+    padding-top: 10px;
+  }
+  .display__status-content {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.875px;
+
+    width: 66px;
+    height: 18px;
+  }
+  .display__status-img {
+    width: 16px;
+    height: 16px;
+  }
+  .display__button_restart {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .button__restart-img {
+    width: 15.38px;
+    height: 15.38px;
+  }
+  .display__players-img {
+    width: 32px;
+    height: 32px;
+  }
+  .display__players {
+    margin-right: 46px;
+    width: 71px;
+  }
+
+  .game {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .game__cell {
+    width: 96px;
+    height: 96px;
+    background-size: 40px 40px;
+  }
+
+  .game__cell img {
+    max-width: 40px;
+    max-height: 40px;
+  }
+  .display {
+    width: 96px;
+    height: 64px;
+
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    letter-spacing: 0.875px;
+  }
+  .display__value {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+    text-align: center;
+    letter-spacing: 1.25px;
+  }
+  .display-grey {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    letter-spacing: 0.75px;
+  }
+
+  .winner-container {
+    width: 279px;
+    height: 140px;
+
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+
+    text-align: center;
+    letter-spacing: 0.875px;
+
+    color: #a8bfc9;
+  }
+  .winner-container__subject {
+    width: 280px;
+    height: 30px;
+  }
+  .winner-container__subject-img {
+    width: 28px;
+    height: 28px;
+  }
+  .winner-container__subject-title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 1.5px;
+  }
+  .winner-container-restart {
+    height: 106px;
+  }
 }
